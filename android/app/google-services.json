@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "708792184319",
+    "project_id": "dicoding-7d73b",
+    "storage_bucket": "dicoding-7d73b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:708792184319:android:866fd78fbc9fe5464e4bca",
+        "android_client_info": {
+          "package_name": "com.trah.dicoding"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "708792184319-06k9e18qtv9nbmggptojt6evafclcslq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAZkF_2sk8MS4fz5KBvnoHlXokAGjQOmmc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "708792184319-06k9e18qtv9nbmggptojt6evafclcslq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
