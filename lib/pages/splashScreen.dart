@@ -1,11 +1,13 @@
-// ignore_for_file: void_checks
+// ignore_for_file: void_checks, avoid_print
 
+import 'dart:convert';
 import 'dart:developer';
 import 'dart:ui';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:deen/pages/home.dart';
 import 'package:deen/utils/validate.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 // ignore: unused_import
@@ -25,7 +27,46 @@ class SplashScreenWidgetState extends State<SplashScreenWidget> {
   TextEditingController passwordController = TextEditingController();
   // ignore: deprecated_member_use
 
-  void _loginFb() async {}
+  void _loginFb() async {
+    print('object');
+    final email = emailController.text;
+    final password = passwordController.text;
+
+    if (email.isEmpty || password.isEmpty) {
+      return alertDialog(
+          context: context,
+          titles: 'Pemberitahuan',
+          desc: "Mohon maaf data tidak lengkap");
+    }
+    if (isEmail(email)) {
+      if (password.length < 8) {
+        return alertDialog(
+            context: context,
+            titles: "Konfirmasi",
+            desc: 'Password max 8 karakter');
+      } else {
+        try {
+          final credential = await FirebaseAuth.instance
+              .signInWithEmailAndPassword(email: email, password: password);
+          log('$credential');
+        } on FirebaseAuthException catch (e) {
+          if (e.code == 'user-not-found') {
+            log('No user found for that email.');
+          } else if (e.code == 'wrong-password') {
+            log('Wrong password provided for that user.');
+          }
+        } catch (e) {
+          print(e);
+          log('$e');
+          alertDialog(
+              context: context, titles: "Konfirmasi", desc: '$e.message');
+        }
+      }
+    } else {
+      return alertDialog(
+          context: context, titles: "Konfirmasi", desc: 'Email tidak tepat');
+    }
+  }
 
   void _toggleVisible() {
     setState(() {
@@ -236,6 +277,38 @@ class SplashScreenWidgetState extends State<SplashScreenWidget> {
                   ],
                 ))));
   }
+
+  Stream<List<User>> readUser() => FirebaseFirestore.instance
+      .collection('users')
+      .snapshots()
+      .map((event) => event.docs.map((e) => User.fromJson(e.data())).toList());
+}
+
+class User {
+  String id;
+  final String name;
+  final String email;
+  final String password;
+
+  User(
+      {this.id = '',
+      required this.name,
+      required this.email,
+      this.password = ''});
+
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'name': name,
+        'email': email,
+        'password': password,
+      };
+
+  static User fromJson(Map<String, dynamic> json) => User(
+        id: json['id'],
+        name: json['name'],
+        email: json['email'],
+        password: json['password'],
+      );
 }
 
 class SplashScreenWidgetSign extends StatefulWidget {
@@ -265,12 +338,8 @@ class SplashScreenWidgetSignState extends State<SplashScreenWidgetSign> {
     final email = emailController.text;
     final password = passwordController.text;
 
-    final jsonUser = {
-      "name": name,
-      "email": email,
-      "password": password,
-    };
-
+    final users = User(id: docs.id, name: name, email: email);
+    final jsonUser = users.toJson();
     if (name.isEmpty || email.isEmpty || password.isEmpty) {
       return alertDialog(
           context: context,
@@ -285,14 +354,25 @@ class SplashScreenWidgetSignState extends State<SplashScreenWidgetSign> {
             desc: 'Password max 8 karakter');
       } else {
         try {
+          final credential =
+              await FirebaseAuth.instance.createUserWithEmailAndPassword(
+            email: email,
+            password: password,
+          );
           await docs.set(jsonUser);
           // ignore: use_build_context_synchronously
           Navigator.push(
             context,
             MaterialPageRoute(builder: (context) => MyHomeWidget(uid: docs.id)),
           );
+        } on FirebaseAuthException catch (e) {
+          if (e.code == 'weak-password') {
+            log('The password provided is too weak.');
+          } else if (e.code == 'email-already-in-use') {
+            log('The account already exists for that email.');
+          }
         } catch (e) {
-          print(e);
+          log('$e');
         }
       }
     } else {
