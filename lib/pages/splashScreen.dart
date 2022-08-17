@@ -338,8 +338,6 @@ class SplashScreenWidgetSignState extends State<SplashScreenWidgetSign> {
     final email = emailController.text;
     final password = passwordController.text;
 
-    final users = User(id: docs.id, name: name, email: email);
-    final jsonUser = users.toJson();
     if (name.isEmpty || email.isEmpty || password.isEmpty) {
       return alertDialog(
           context: context,
@@ -359,6 +357,10 @@ class SplashScreenWidgetSignState extends State<SplashScreenWidgetSign> {
             email: email,
             password: password,
           );
+
+          final myUid = FirebaseAuth.instance.currentUser!.uid;
+          final users = User(id: myUid, name: name, email: email);
+          final jsonUser = users.toJson();
           await docs.set(jsonUser);
           // ignore: use_build_context_synchronously
           Navigator.push(
