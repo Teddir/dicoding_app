@@ -1,83 +1,616 @@
+// ignore_for_file: unnecessary_this, unnecessary_const
+
 import 'dart:developer';
 import 'dart:ui';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:deen/main.dart';
+import 'package:deen/pages/splashScreen.dart';
 import 'package:deen/utils/validate.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 // ignore: unused_import
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/services.dart';
 
 class MyHomeWidget extends StatefulWidget {
-  const MyHomeWidget({Key? key, required uid}) : super(key: key);
+  const MyHomeWidget({Key? key, required uid, datas}) : super(key: key);
   @override
   State<MyHomeWidget> createState() => MyHomeWidgetState();
 }
+
+class MySlider {
+  final int id;
+  final String imgUrl;
+  final String title;
+  final String desc;
+  final String creator;
+
+  const MySlider(
+      {required this.id,
+      required this.imgUrl,
+      required this.title,
+      required this.desc,
+      required this.creator});
+
+  @override
+  String toString() {
+    return '{${this.id}, ${this.title}, ${this.desc}, ${this.creator}, ${this.imgUrl}}';
+  }
+}
+
+final List<MySlider> sliderList = [
+  const MySlider(
+    id: 0,
+    title: 'Studi Independen Bersertifikat Kampus Merdeka Batch Ketiga',
+    desc:
+        'Program Studi Independen memungkinkan mahasiswa/i dari jurusan apapun mempelajari Teknologi & Persiapan Karier sebagai Developer dengan konversi hingga 20 SKS.',
+    creator: 'Dicoding & Kemendikbudristek - Dikti',
+    imgUrl:
+        'https://dicoding-web-img.sgp1.cdn.digitaloceanspaces.com/original/commons/dos:studi_independen_bersertifikat_kampus_merdeka_batch_ketiga_image_010722152429.png',
+  ),
+  // const MySlider(
+  //   id: 1,
+  //   title: 'Beasiswa IDCamp 2022',
+  //   desc:
+  //       'IDCamp adalah program beasiswa dari Indosat Ooredoo Hutchison untuk mencetak developer Indonesia. Tersedia 8 opsi alur belajar. Daftarkan dirimu sekarang!',
+  //   creator: 'Indosat Ooredoo Hutchison',
+  //   imgUrl:
+  //       'https://dicoding-web-img.sgp1.cdn.digitaloceanspaces.com/original/commons/dos:beasiswa_idcamp_2022_image_300522084933.png',
+  // ),
+  // const MySlider(
+  //   id: 2,
+  //   title: 'Augmented Reality Creator program powered by Snap AR',
+  //   desc:
+  //       'Program beasiswa belajar membuat produk Augmented Reality di platform Snapchat untuk seluruh Warga Negara Indonesia.',
+  //   creator: 'Snapchat',
+  //   imgUrl:
+  //       'https://dicoding-web-img.sgp1.cdn.digitaloceanspaces.com/original/commons/dos:augmented_reality_creator_program_powered_by_snap_ar_image_010322091754.png',
+  // ),
+  const MySlider(
+    id: 3,
+    title: 'Bangkit Academy 2022',
+    desc:
+        'Program kesiapan karier terafiliasi Kampus Merdeka. Melatih mahasiswa agar memiliki keterampilan relevan untuk karier sukses di perusahaan teknologi terkemuka.',
+    creator: 'Google, GoTo, Traveloka, Kemdikbudristek',
+    imgUrl:
+        'https://dicoding-web-img.sgp1.cdn.digitaloceanspaces.com/original/commons/dos:bangkit_academy_2022_image_301121094414.png',
+  ),
+];
+
+final List<MySlider> sliderListKategori = [
+  const MySlider(
+      id: 0,
+      imgUrl:
+          'https://images.unsplash.com/photo-1510915228340-29c85a43dcfe?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80',
+      title: 'Android Developer',
+      desc: '',
+      creator: ''),
+  const MySlider(
+      id: 1,
+      imgUrl:
+          'https://images.unsplash.com/photo-1534665482403-a909d0d97c67?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80',
+      title: 'Back-End Developer',
+      desc: '',
+      creator: ''),
+  const MySlider(
+      id: 2,
+      imgUrl:
+          'https://images.unsplash.com/photo-1555066931-bf19f8fd1085?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=871&q=80',
+      title: 'Front-End Web Developer',
+      desc: '',
+      creator: ''),
+  const MySlider(
+      id: 3,
+      imgUrl:
+          'https://images.unsplash.com/photo-1623479322729-28b25c16b011?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80',
+      title: 'Ios Developer',
+      desc: '',
+      creator: ''),
+];
 
 class MyHomeWidgetState extends State<MyHomeWidget> {
   final String _name = '';
 
   @override
   Widget build(BuildContext context) {
-    Size screenSize = MediaQuery.of(context).size;
-    Orientation orientation = MediaQuery.of(context).orientation;
+    return Desain2();
+  }
+
+  void initState() {
+    // put it here
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+      statusBarColor: Colors.transparent,
+    ));
+    super.initState();
+  }
+}
+
+class Desain2 extends StatelessWidget {
+  const Desain2({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
 
+    String userName = '';
+    final result = FirebaseAuth.instance.currentUser!.uid;
+    readData() async {
+      var data = await FirebaseFirestore.instance
+          .collection("users")
+          .where('id', isEqualTo: result)
+          .get();
+      data.docs
+          .forEach((documentSnapshot) => {userName = documentSnapshot['name']});
+      return userName;
+    }
+
+    // ignore: prefer_function_declarations_over_variables
+
     return Scaffold(
-        appBar: AppBar(
-          actions: [],
-        ),
-        body: Container(
-          margin: const EdgeInsets.only(top: 16.0),
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        title: Container(
+          padding: const EdgeInsets.only(left: 16),
+          alignment: Alignment.centerLeft,
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              const Text(
+                'Hello',
+                style: TextStyle(fontSize: 16, color: Colors.black45),
+              ),
+              const SizedBox(
+                height: 4,
+              ),
+              FutureBuilder(
+                future: readData(),
+                builder: (context, snapshot) {
+                  if (snapshot.hasError) {
+                    return Text('error ${snapshot.error}');
+                  } else if (snapshot.hasData) {
+                    final userName = snapshot.data;
+                    return Text(
+                      '$userName',
+                      style: const TextStyle(color: Colors.black87),
+                    );
+                  } else {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }
+                },
+              )
+            ],
+          ),
+        ),
+        actions: <Widget>[
+          Container(
+            padding: const EdgeInsets.only(right: 16),
+            child: Stack(
+              children: [
+                IconButton(
+                    onPressed: () {},
+                    icon: const Icon(
+                      Icons.notifications,
+                      color: Colors.black38,
+                      size: 32,
+                    )),
+                Positioned(
+                  right: 11,
+                  top: 8,
+                  child: Container(
+                    alignment: Alignment.center,
+                    constraints:
+                        const BoxConstraints(minHeight: 14, minWidth: 14),
+                    decoration: BoxDecoration(
+                        color: Colors.red,
+                        borderRadius: BorderRadius.circular(6)),
+                    child: const Text(
+                      '1',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(color: Colors.white, fontSize: 8),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+      body: SafeArea(
+          child: Container(
+        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          const SizedBox(height: 18.0),
+          CarouselSlider(
+            options: CarouselOptions(
+                autoPlay: true,
+                viewportFraction: 1,
+                aspectRatio: 16 / 9,
+                initialPage: 0,
+                autoPlayInterval: const Duration(seconds: 10)),
+            items: sliderList.map((i) {
+              return Builder(
+                builder: (BuildContext context) {
+                  return Container(
+                      height: 250,
+                      width: screenWidth,
+                      child: Center(
+                        child: Stack(
+                          alignment: Alignment.center,
+                          children: [
+                            Positioned(
+                                child: Container(
+                              width: screenWidth,
+                              color: Color.fromARGB(255, 212, 212, 212),
+                              child: Image.network(
+                                i.imgUrl,
+                                fit: BoxFit.cover,
+                              ),
+                            )),
+                            Container(
+                              width: screenWidth,
+                              height: 300,
+                              alignment: Alignment.center,
+                              decoration: const BoxDecoration(
+                                  gradient: LinearGradient(
+                                begin: Alignment.topCenter,
+                                end: Alignment.bottomCenter,
+                                colors: [
+                                  Color.fromARGB(59, 62, 80, 100),
+                                  Color.fromARGB(78, 43, 55, 70),
+                                ],
+                                stops: [0.4, 0.76],
+                              )),
+                            ),
+                          ],
+                        ),
+                      ));
+                },
+              );
+            }).toList(),
+          ),
+          const SizedBox(height: 18.0),
+          Container(
+              child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              Container(
+                margin: const EdgeInsets.symmetric(horizontal: 32.0),
+                child: const Text(
+                  'Learning Path',
+                  style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w700,
+                      color: Colors.black54),
+                ),
+              ),
+              const SizedBox(height: 20.0),
               CarouselSlider(
                 options: CarouselOptions(
-                    height: 200,
-                    autoPlay: true,
-                    viewportFraction: 1,
-                    autoPlayInterval: Duration(seconds: 3)),
-                items: [1, 2, 3, 4].map((i) {
+                    height: screenWidth / 1.5,
+                    autoPlay: false,
+                    viewportFraction: 0.9,
+                    aspectRatio: 22 / 9,
+                    initialPage: 1,
+                    reverse: false,
+                    enableInfiniteScroll: false,
+                    autoPlayInterval: const Duration(seconds: 10)),
+                items: [0, 1, 2, 3].map((i) {
                   return Builder(
                     builder: (BuildContext context) {
-                      return Container(
-                        margin: const EdgeInsets.all(16.0),
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(50.0)),
-                        child: Align(
-                          child: Container(
-                            height: 200,
-                            width: screenWidth - 32,
-                            color: Colors.pinkAccent[200],
-                            child: Align(
-                              child: Text(
-                                'Ini Banner $i',
-                                style: const TextStyle(fontSize: 24),
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Container(
+                            margin: EdgeInsets.only(left: 8, right: 12),
+                            width: screenWidth,
+                            padding: const EdgeInsets.all(12.0),
+                            decoration: BoxDecoration(
+                                border: Border.all(
+                                    width: 1.0, color: Colors.black26),
+                                borderRadius: BorderRadius.circular(4)),
+                            child: Container(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Row(
+                                    children: const <Widget>[
+                                      Icon(
+                                        Icons.stacked_bar_chart_outlined,
+                                        color: Colors.black54,
+                                        size: 32,
+                                      ),
+                                      SizedBox(
+                                        width: 4,
+                                      ),
+                                      Text(
+                                        'Langkah 1',
+                                        style: TextStyle(
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w600,
+                                            color: Colors.black54),
+                                      ),
+                                    ],
+                                  ),
+                                  const SizedBox(
+                                    height: 12,
+                                  ),
+                                  Container(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 6),
+                                    child: const Text(
+                                      'Memulai Pemrograman Dengan Kotlin',
+                                      style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w600,
+                                          color: Colors.black54),
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    height: 14,
+                                  ),
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Row(
+                                        children: [
+                                          Icon(
+                                            Icons.timelapse,
+                                            size: 32,
+                                            color: Colors.green[300],
+                                          ),
+                                          const SizedBox(
+                                            width: 6,
+                                          ),
+                                          const Text(
+                                            '50 jam',
+                                            style: TextStyle(
+                                                fontSize: 12,
+                                                fontWeight: FontWeight.w500,
+                                                color: Colors.black54),
+                                          )
+                                        ],
+                                      ),
+                                      Row(
+                                        children: [
+                                          Icon(
+                                            Icons.star,
+                                            size: 32,
+                                            color: Colors.yellow[700],
+                                          ),
+                                          const SizedBox(
+                                            width: 6,
+                                          ),
+                                          const Text(
+                                            '4.85',
+                                            style: TextStyle(
+                                                fontSize: 12,
+                                                fontWeight: FontWeight.w500,
+                                                color: Colors.black54),
+                                          )
+                                        ],
+                                      ),
+                                      Row(
+                                        children: [
+                                          Icon(
+                                            Icons.call_missed_outgoing_outlined,
+                                            size: 32,
+                                            color: Colors.blue[300],
+                                          ),
+                                          const SizedBox(
+                                            width: 6,
+                                          ),
+                                          const Text(
+                                            'Dasar - Pemula',
+                                            style: TextStyle(
+                                                fontSize: 12,
+                                                fontWeight: FontWeight.w500,
+                                                color: Colors.black54),
+                                          )
+                                        ],
+                                      )
+                                    ],
+                                  ),
+                                  const SizedBox(
+                                    height: 14,
+                                  ),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Icon(
+                                            Icons.bookmark_added_outlined,
+                                            size: 32,
+                                            color: Colors.grey[500],
+                                          ),
+                                          const SizedBox(
+                                            width: 6,
+                                          ),
+                                          const Text(
+                                            '118 Modul',
+                                            style: TextStyle(
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.w400,
+                                                color: Colors.black54),
+                                          )
+                                        ],
+                                      ),
+                                      const SizedBox(
+                                        width: 26,
+                                      ),
+                                      Row(
+                                        children: [
+                                          Icon(
+                                            Icons.people_outline,
+                                            size: 32,
+                                            color: Colors.grey[500],
+                                          ),
+                                          const SizedBox(
+                                            width: 6,
+                                          ),
+                                          const Text(
+                                            '41.225 Siswa Terdaftar',
+                                            style: TextStyle(
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.w400,
+                                                color: Colors.black54),
+                                          )
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                ],
                               ),
                             ),
                           ),
-                        ),
+                          const SizedBox(
+                            height: 16,
+                          ),
+                          Container(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 10),
+                              child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: const <Widget>[
+                                    const Text(
+                                      'Langkah Pertama',
+                                      style: const TextStyle(
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.w600,
+                                          color: Colors.black54),
+                                    ),
+                                    const SizedBox(
+                                      height: 6,
+                                    ),
+                                    const Text(
+                                      'Langkah pertama untuk menjadi seorang Android Developer dengan mempelajari bahasa yang direkomendasikan oleh Google.',
+                                      style: TextStyle(
+                                          fontSize: 13,
+                                          fontWeight: FontWeight.w300,
+                                          color: Colors.black87,
+                                          letterSpacing: 1.0,
+                                          height: 1.4),
+                                    ),
+                                  ]))
+                        ],
                       );
                     },
                   );
                 }).toList(),
               ),
-              Center(
-                child: Container(
-                  decoration: BoxDecoration(
-                      color: Colors.pink[500],
-                      borderRadius: BorderRadius.circular(100)),
-                  margin: const EdgeInsets.all(12.0),
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    'Width : $screenSize, orientasi : $orientation',
-                    style: const TextStyle(color: Colors.white),
-                  ),
+              Container(
+                margin: const EdgeInsets.symmetric(horizontal: 32.0),
+                child: const Text(
+                  'Langganan',
+                  style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w700,
+                      color: Colors.black54),
                 ),
-              )
+              ),
+              const SizedBox(height: 20.0),
             ],
+          ))
+        ]),
+      )),
+    );
+  }
+}
+
+class Desain1 extends StatelessWidget {
+  const Desain1({Key? key}) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    Size screenSize = MediaQuery.of(context).size;
+    Orientation orientation = MediaQuery.of(context).orientation;
+    double screenWidth = MediaQuery.of(context).size.width;
+    return Container(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          CarouselSlider(
+            options: CarouselOptions(
+                autoPlay: true,
+                viewportFraction: 1,
+                aspectRatio: 16 / 9,
+                initialPage: 0,
+                autoPlayInterval: const Duration(seconds: 10)),
+            items: sliderList.map((i) {
+              return Builder(
+                builder: (BuildContext context) {
+                  return Container(
+                      height: 400,
+                      width: screenWidth,
+                      child: Center(
+                        child: Stack(
+                          alignment: Alignment.center,
+                          children: [
+                            Positioned(
+                                child: Container(
+                              width: screenWidth,
+                              color: Color.fromARGB(255, 212, 212, 212),
+                              child: Image.network(
+                                i.imgUrl,
+                                fit: BoxFit.cover,
+                              ),
+                            )),
+                            Container(
+                              width: screenWidth,
+                              height: 400,
+                              alignment: Alignment.center,
+                              // decoration: const BoxDecoration(
+                              //     gradient: LinearGradient(
+                              //   begin: Alignment.topCenter,
+                              //   end: Alignment.bottomCenter,
+                              //   colors: [
+                              //     Color.fromARGB(59, 62, 80, 100),
+                              //     Color.fromARGB(78, 43, 55, 70),
+                              //   ],
+                              //   stops: [0.4, 0.76],
+                              // )),
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 12, horizontal: 16),
+                            ),
+                          ],
+                        ),
+                      ));
+                },
+              );
+            }).toList(),
           ),
-        ));
+          Container(
+              margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text(
+                    'Learning',
+                    style: TextStyle(fontSize: 22, fontWeight: FontWeight.w700),
+                  ),
+                  Container(
+                    alignment: Alignment.center,
+                    color: Colors.pink,
+                    child: GridView.count(
+                      shrinkWrap: true,
+                      primary: false,
+                      scrollDirection: Axis.vertical,
+                      crossAxisCount: 8,
+                      children: List.generate(16, (index) {
+                        return Text('sa');
+                      }),
+                    ),
+                  )
+                ],
+              ))
+        ],
+      ),
+    );
   }
 }
