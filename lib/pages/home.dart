@@ -127,8 +127,23 @@ class MyHomeWidgetState extends State<MyHomeWidget> {
   }
 }
 
-class Desain2 extends StatelessWidget {
+class Desain2 extends StatefulWidget {
   const Desain2({Key? key}) : super(key: key);
+
+  @override
+  State<Desain2> createState() => Desain2Widget();
+}
+
+class Desain2Widget extends State<Desain2> {
+  int _selectedIndex = 0;
+
+  void __onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
+
+  static const List<Widget> _widgetOptions = <Widget>[];
 
   @override
   Widget build(BuildContext context) {
@@ -172,9 +187,12 @@ class Desain2 extends StatelessWidget {
                     return Text('error ${snapshot.error}');
                   } else if (snapshot.hasData) {
                     final userName = snapshot.data;
-                    return Text(
-                      '$userName',
-                      style: const TextStyle(color: Colors.black87),
+                    return Container(
+                      padding: const EdgeInsets.only(bottom: 12),
+                      child: Text(
+                        '$userName',
+                        style: const TextStyle(color: Colors.black87),
+                      ),
                     );
                   } else {
                     return const Center(
@@ -182,7 +200,7 @@ class Desain2 extends StatelessWidget {
                     );
                   }
                 },
-              )
+              ),
             ],
           ),
         ),
@@ -221,7 +239,7 @@ class Desain2 extends StatelessWidget {
         ],
       ),
       body: SafeArea(
-          child: Container(
+          child: SingleChildScrollView(
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           const SizedBox(height: 18.0),
           CarouselSlider(
@@ -288,222 +306,234 @@ class Desain2 extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 20.0),
-              CarouselSlider(
-                options: CarouselOptions(
-                    height: screenWidth / 1.5,
-                    autoPlay: false,
-                    viewportFraction: 0.9,
-                    aspectRatio: 22 / 9,
-                    initialPage: 1,
-                    reverse: false,
-                    enableInfiniteScroll: false,
-                    autoPlayInterval: const Duration(seconds: 10)),
-                items: [0, 1, 2, 3].map((i) {
-                  return Builder(
-                    builder: (BuildContext context) {
-                      return Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Container(
-                            margin: EdgeInsets.only(left: 8, right: 12),
-                            width: screenWidth,
-                            padding: const EdgeInsets.all(12.0),
-                            decoration: BoxDecoration(
-                                border: Border.all(
-                                    width: 1.0, color: Colors.black26),
-                                borderRadius: BorderRadius.circular(4)),
-                            child: Container(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Row(
-                                    children: const <Widget>[
-                                      Icon(
-                                        Icons.stacked_bar_chart_outlined,
-                                        color: Colors.black54,
-                                        size: 32,
-                                      ),
-                                      SizedBox(
-                                        width: 4,
-                                      ),
-                                      Text(
-                                        'Langkah 1',
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const DetailLearning()),
+                  );
+                },
+                child: CarouselSlider(
+                  options: CarouselOptions(
+                      height: screenWidth / 1.5,
+                      autoPlay: false,
+                      viewportFraction: 0.9,
+                      aspectRatio: 22 / 9,
+                      initialPage: 1,
+                      reverse: false,
+                      enableInfiniteScroll: false,
+                      autoPlayInterval: const Duration(seconds: 10)),
+                  items: [0, 1, 2, 3].map((i) {
+                    return Builder(
+                      builder: (BuildContext context) {
+                        return Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Container(
+                              margin: EdgeInsets.only(left: 8, right: 12),
+                              width: screenWidth,
+                              padding: const EdgeInsets.all(12.0),
+                              decoration: BoxDecoration(
+                                  border: Border.all(
+                                      width: 1.0, color: Colors.black26),
+                                  borderRadius: BorderRadius.circular(4)),
+                              child: Container(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Row(
+                                      children: const <Widget>[
+                                        Icon(
+                                          Icons.stacked_bar_chart_outlined,
+                                          color: Colors.black54,
+                                          size: 32,
+                                        ),
+                                        SizedBox(
+                                          width: 4,
+                                        ),
+                                        Text(
+                                          'Langkah 1',
+                                          style: TextStyle(
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.w600,
+                                              color: Colors.black54),
+                                        ),
+                                      ],
+                                    ),
+                                    const SizedBox(
+                                      height: 12,
+                                    ),
+                                    Container(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 6),
+                                      child: const Text(
+                                        'Memulai Pemrograman Dengan Kotlin',
                                         style: TextStyle(
-                                            fontSize: 12,
+                                            fontSize: 16,
                                             fontWeight: FontWeight.w600,
                                             color: Colors.black54),
                                       ),
-                                    ],
-                                  ),
-                                  const SizedBox(
-                                    height: 12,
-                                  ),
-                                  Container(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 6),
-                                    child: const Text(
-                                      'Memulai Pemrograman Dengan Kotlin',
-                                      style: TextStyle(
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.w600,
-                                          color: Colors.black54),
-                                    ),
-                                  ),
-                                  const SizedBox(
-                                    height: 14,
-                                  ),
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Row(
-                                        children: [
-                                          Icon(
-                                            Icons.timelapse,
-                                            size: 32,
-                                            color: Colors.green[300],
-                                          ),
-                                          const SizedBox(
-                                            width: 6,
-                                          ),
-                                          const Text(
-                                            '50 jam',
-                                            style: TextStyle(
-                                                fontSize: 12,
-                                                fontWeight: FontWeight.w500,
-                                                color: Colors.black54),
-                                          )
-                                        ],
-                                      ),
-                                      Row(
-                                        children: [
-                                          Icon(
-                                            Icons.star,
-                                            size: 32,
-                                            color: Colors.yellow[700],
-                                          ),
-                                          const SizedBox(
-                                            width: 6,
-                                          ),
-                                          const Text(
-                                            '4.85',
-                                            style: TextStyle(
-                                                fontSize: 12,
-                                                fontWeight: FontWeight.w500,
-                                                color: Colors.black54),
-                                          )
-                                        ],
-                                      ),
-                                      Row(
-                                        children: [
-                                          Icon(
-                                            Icons.call_missed_outgoing_outlined,
-                                            size: 32,
-                                            color: Colors.blue[300],
-                                          ),
-                                          const SizedBox(
-                                            width: 6,
-                                          ),
-                                          const Text(
-                                            'Dasar - Pemula',
-                                            style: TextStyle(
-                                                fontSize: 12,
-                                                fontWeight: FontWeight.w500,
-                                                color: Colors.black54),
-                                          )
-                                        ],
-                                      )
-                                    ],
-                                  ),
-                                  const SizedBox(
-                                    height: 14,
-                                  ),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: [
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Icon(
-                                            Icons.bookmark_added_outlined,
-                                            size: 32,
-                                            color: Colors.grey[500],
-                                          ),
-                                          const SizedBox(
-                                            width: 6,
-                                          ),
-                                          const Text(
-                                            '118 Modul',
-                                            style: TextStyle(
-                                                fontSize: 14,
-                                                fontWeight: FontWeight.w400,
-                                                color: Colors.black54),
-                                          )
-                                        ],
-                                      ),
-                                      const SizedBox(
-                                        width: 26,
-                                      ),
-                                      Row(
-                                        children: [
-                                          Icon(
-                                            Icons.people_outline,
-                                            size: 32,
-                                            color: Colors.grey[500],
-                                          ),
-                                          const SizedBox(
-                                            width: 6,
-                                          ),
-                                          const Text(
-                                            '41.225 Siswa Terdaftar',
-                                            style: TextStyle(
-                                                fontSize: 14,
-                                                fontWeight: FontWeight.w400,
-                                                color: Colors.black54),
-                                          )
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                          const SizedBox(
-                            height: 16,
-                          ),
-                          Container(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 10),
-                              child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: const <Widget>[
-                                    const Text(
-                                      'Langkah Pertama',
-                                      style: const TextStyle(
-                                          fontSize: 15,
-                                          fontWeight: FontWeight.w600,
-                                          color: Colors.black54),
                                     ),
                                     const SizedBox(
-                                      height: 6,
+                                      height: 14,
                                     ),
-                                    const Text(
-                                      'Langkah pertama untuk menjadi seorang Android Developer dengan mempelajari bahasa yang direkomendasikan oleh Google.',
-                                      style: TextStyle(
-                                          fontSize: 13,
-                                          fontWeight: FontWeight.w300,
-                                          color: Colors.black87,
-                                          letterSpacing: 1.0,
-                                          height: 1.4),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Row(
+                                          children: [
+                                            Icon(
+                                              Icons.timelapse,
+                                              size: 32,
+                                              color: Colors.green[300],
+                                            ),
+                                            const SizedBox(
+                                              width: 6,
+                                            ),
+                                            const Text(
+                                              '50 jam',
+                                              style: TextStyle(
+                                                  fontSize: 12,
+                                                  fontWeight: FontWeight.w500,
+                                                  color: Colors.black54),
+                                            )
+                                          ],
+                                        ),
+                                        Row(
+                                          children: [
+                                            Icon(
+                                              Icons.star,
+                                              size: 32,
+                                              color: Colors.yellow[700],
+                                            ),
+                                            const SizedBox(
+                                              width: 6,
+                                            ),
+                                            const Text(
+                                              '4.85',
+                                              style: TextStyle(
+                                                  fontSize: 12,
+                                                  fontWeight: FontWeight.w500,
+                                                  color: Colors.black54),
+                                            )
+                                          ],
+                                        ),
+                                        Row(
+                                          children: [
+                                            Icon(
+                                              Icons
+                                                  .call_missed_outgoing_outlined,
+                                              size: 32,
+                                              color: Colors.blue[300],
+                                            ),
+                                            const SizedBox(
+                                              width: 6,
+                                            ),
+                                            const Text(
+                                              'Dasar - Pemula',
+                                              style: TextStyle(
+                                                  fontSize: 12,
+                                                  fontWeight: FontWeight.w500,
+                                                  color: Colors.black54),
+                                            )
+                                          ],
+                                        )
+                                      ],
                                     ),
-                                  ]))
-                        ],
-                      );
-                    },
-                  );
-                }).toList(),
+                                    const SizedBox(
+                                      height: 14,
+                                    ),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: [
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Icon(
+                                              Icons.bookmark_added_outlined,
+                                              size: 32,
+                                              color: Colors.grey[500],
+                                            ),
+                                            const SizedBox(
+                                              width: 6,
+                                            ),
+                                            const Text(
+                                              '118 Modul',
+                                              style: TextStyle(
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.w400,
+                                                  color: Colors.black54),
+                                            )
+                                          ],
+                                        ),
+                                        const SizedBox(
+                                          width: 26,
+                                        ),
+                                        Row(
+                                          children: [
+                                            Icon(
+                                              Icons.people_outline,
+                                              size: 32,
+                                              color: Colors.grey[500],
+                                            ),
+                                            const SizedBox(
+                                              width: 6,
+                                            ),
+                                            const Text(
+                                              '41.225 Siswa Terdaftar',
+                                              style: TextStyle(
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.w400,
+                                                  color: Colors.black54),
+                                            )
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 16,
+                            ),
+                            Container(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 10),
+                                child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: const <Widget>[
+                                      const Text(
+                                        'Langkah Pertama',
+                                        style: const TextStyle(
+                                            fontSize: 15,
+                                            fontWeight: FontWeight.w600,
+                                            color: Colors.black54),
+                                      ),
+                                      const SizedBox(
+                                        height: 6,
+                                      ),
+                                      const Text(
+                                        'Langkah pertama untuk menjadi seorang Android Developer dengan mempelajari bahasa yang direkomendasikan oleh Google.',
+                                        style: TextStyle(
+                                            fontSize: 13,
+                                            fontWeight: FontWeight.w300,
+                                            color: Colors.black87,
+                                            letterSpacing: 1.0,
+                                            height: 1.4),
+                                      ),
+                                    ]))
+                          ],
+                        );
+                      },
+                    );
+                  }).toList(),
+                ),
               ),
               Container(
                 margin: const EdgeInsets.symmetric(horizontal: 32.0),
@@ -516,10 +546,156 @@ class Desain2 extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 20.0),
+              Container(
+                margin: const EdgeInsets.symmetric(horizontal: 26.0),
+                child: Column(
+                  children: List.generate(
+                    2,
+                    (index) {
+                      return Container(
+                        margin: EdgeInsets.only(left: 8, right: 12, bottom: 16),
+                        width: screenWidth,
+                        padding: const EdgeInsets.symmetric(vertical: 18.0),
+                        decoration: BoxDecoration(
+                            border:
+                                Border.all(width: 1.0, color: Colors.black26),
+                            borderRadius: BorderRadius.circular(4)),
+                        child: Column(
+                          children: [
+                            const Text(
+                              'Langganan 1 bulan (30 hari)',
+                              style: TextStyle(
+                                  color: Colors.black54,
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 14),
+                            ),
+                            const SizedBox(
+                              height: 16,
+                            ),
+                            const Text('Rp 1,500,000'),
+                            const SizedBox(
+                              height: 8,
+                            ),
+                            TextButton(
+                                onPressed: () {},
+                                style: TextButton.styleFrom(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 24, vertical: 12),
+                                    primary: Colors.white,
+                                    backgroundColor:
+                                        const Color.fromARGB(255, 62, 80, 100)),
+                                child: const Text(
+                                  'Pilih Paket',
+                                ))
+                          ],
+                        ),
+                      );
+                    },
+                  ),
+                ),
+              )
             ],
           ))
         ]),
       )),
+      bottomNavigationBar: BottomNavigationBar(
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home_rounded),
+            label: 'Katalog',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.qr_code_scanner_rounded),
+            label: 'Aktivasi Token',
+          ),
+        ],
+        currentIndex: _selectedIndex,
+        onTap: __onItemTapped,
+        selectedItemColor: Color.fromARGB(255, 62, 80, 100),
+        unselectedItemColor: Color.fromARGB(85, 62, 80, 100),
+      ),
+    );
+  }
+}
+
+class DetailLearning extends StatelessWidget {
+  const DetailLearning({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final myColor = Color.fromARGB(255, 62, 80, 100);
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Langkah 1'),
+        backgroundColor: myColor,
+      ),
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 12),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    Row(
+                      children: [
+                        Icon(
+                          Icons.star,
+                          size: 32,
+                          color: Colors.yellow[700],
+                        ),
+                        const SizedBox(
+                          width: 6,
+                        ),
+                        const Text('4.85')
+                      ],
+                    ),
+                    const SizedBox(
+                      width: 12,
+                    ),
+                    Row(
+                      children: [
+                        Icon(
+                          Icons.arrow_right_alt,
+                          size: 32,
+                          color: myColor,
+                        ),
+                        const SizedBox(
+                          width: 6,
+                        ),
+                        Row(
+                          children: const [
+                            Text(
+                              'Android ',
+                              style: TextStyle(
+                                decoration: TextDecoration.underline,
+                                decorationStyle: TextDecorationStyle.solid,
+                              ),
+                            ),
+                            Text('Learning Path'),
+                          ],
+                        )
+                      ],
+                    ),
+                  ],
+                ),
+                const SizedBox(
+                  height: 12,
+                ),
+                Text(
+                  'Memulai Pemrograman Dengan Kotlin',
+                  style: TextStyle(
+                      fontWeight: FontWeight.w600,
+                      color: myColor,
+                      fontSize: 24,
+                      letterSpacing: 1.4),
+                )
+              ],
+            ),
+          ),
+        ),
+      ),
     );
   }
 }
