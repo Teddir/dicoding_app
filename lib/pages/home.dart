@@ -553,7 +553,8 @@ class Desain2Widget extends State<Desain2> {
                     2,
                     (index) {
                       return Container(
-                        margin: EdgeInsets.only(left: 8, right: 12, bottom: 16),
+                        margin: const EdgeInsets.only(
+                            left: 8, right: 12, bottom: 16),
                         width: screenWidth,
                         padding: const EdgeInsets.symmetric(vertical: 18.0),
                         decoration: BoxDecoration(
@@ -611,8 +612,8 @@ class Desain2Widget extends State<Desain2> {
         ],
         currentIndex: _selectedIndex,
         onTap: __onItemTapped,
-        selectedItemColor: Color.fromARGB(255, 62, 80, 100),
-        unselectedItemColor: Color.fromARGB(85, 62, 80, 100),
+        selectedItemColor: const Color.fromARGB(255, 62, 80, 100),
+        unselectedItemColor: const Color.fromARGB(85, 62, 80, 100),
       ),
     );
   }
@@ -623,6 +624,7 @@ class DetailLearning extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // ignore: prefer_const_constructors
     final myColor = Color.fromARGB(255, 62, 80, 100);
     return Scaffold(
       appBar: AppBar(
@@ -690,7 +692,37 @@ class DetailLearning extends StatelessWidget {
                       color: myColor,
                       fontSize: 24,
                       letterSpacing: 1.4),
-                )
+                ),
+                Row(
+                  children: [
+                    const Text(
+                      "Teknologi",
+                      style: TextStyle(
+                        fontSize: 12,
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 24, vertical: 12),
+                      decoration: BoxDecoration(
+                          border: Border.all(width: 2, color: myColor),
+                          borderRadius: BorderRadius.circular(4)),
+                      child: const Text('Android'),
+                    ),
+                    const SizedBox(
+                      width: 12,
+                    ),
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 24, vertical: 12),
+                      decoration: BoxDecoration(
+                          border: Border.all(width: 2, color: myColor),
+                          borderRadius: BorderRadius.circular(4)),
+                      child: const Text('Multi Platform'),
+                    ),
+                  ],
+                ),
               ],
             ),
           ),
