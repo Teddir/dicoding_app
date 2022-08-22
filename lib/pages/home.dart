@@ -573,7 +573,7 @@ class Desain2Widget extends State<Desain2> {
                             const SizedBox(
                               height: 16,
                             ),
-                            const Text('Rp 1,500,000'),
+                            const Text('Rp 1.500.000'),
                             const SizedBox(
                               height: 8,
                             ),
