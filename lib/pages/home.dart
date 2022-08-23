@@ -624,6 +624,7 @@ class DetailLearning extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
     // ignore: prefer_const_constructors
     final myColor = Color.fromARGB(255, 62, 80, 100);
     return Scaffold(
@@ -633,100 +634,199 @@ class DetailLearning extends StatelessWidget {
       ),
       body: SafeArea(
         child: SingleChildScrollView(
-          child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 12),
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  children: [
-                    Row(
-                      children: [
-                        Icon(
-                          Icons.star,
-                          size: 32,
-                          color: Colors.yellow[700],
-                        ),
-                        const SizedBox(
-                          width: 6,
-                        ),
-                        const Text('4.85')
-                      ],
-                    ),
-                    const SizedBox(
-                      width: 12,
-                    ),
-                    Row(
-                      children: [
-                        Icon(
-                          Icons.arrow_right_alt,
-                          size: 32,
-                          color: myColor,
-                        ),
-                        const SizedBox(
-                          width: 6,
-                        ),
-                        Row(
-                          children: const [
-                            Text(
-                              'Android ',
-                              style: TextStyle(
-                                decoration: TextDecoration.underline,
-                                decorationStyle: TextDecorationStyle.solid,
-                              ),
-                            ),
-                            Text('Learning Path'),
-                          ],
-                        )
-                      ],
-                    ),
-                  ],
-                ),
-                const SizedBox(
-                  height: 12,
-                ),
-                Text(
-                  'Memulai Pemrograman Dengan Kotlin',
-                  style: TextStyle(
-                      fontWeight: FontWeight.w600,
-                      color: myColor,
-                      fontSize: 24,
-                      letterSpacing: 1.4),
-                ),
-                Row(
-                  children: [
-                    const Text(
-                      "Teknologi",
-                      style: TextStyle(
-                        fontSize: 12,
-                        fontWeight: FontWeight.w400,
-                      ),
-                    ),
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 24, vertical: 12),
-                      decoration: BoxDecoration(
-                          border: Border.all(width: 2, color: myColor),
-                          borderRadius: BorderRadius.circular(4)),
-                      child: const Text('Android'),
-                    ),
-                    const SizedBox(
-                      width: 12,
-                    ),
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 24, vertical: 12),
-                      decoration: BoxDecoration(
-                          border: Border.all(width: 2, color: myColor),
-                          borderRadius: BorderRadius.circular(4)),
-                      child: const Text('Multi Platform'),
-                    ),
-                  ],
-                ),
-              ],
+          children: [
+            Container(
+              height: screenWidth / 3.5,
+              width: screenWidth,
+              child: Image.network(
+                'https://images.unsplash.com/photo-1555066932-e78dd8fb77bb?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80',
+                fit: BoxFit.cover,
+              ),
             ),
-          ),
-        ),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 12),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      Row(
+                        children: [
+                          Icon(
+                            Icons.star,
+                            size: 32,
+                            color: Colors.yellow[700],
+                          ),
+                          const SizedBox(
+                            width: 6,
+                          ),
+                          const Text('4.85')
+                        ],
+                      ),
+                      const SizedBox(
+                        width: 12,
+                      ),
+                      Row(
+                        children: [
+                          Icon(
+                            Icons.arrow_right_alt,
+                            size: 32,
+                            color: myColor,
+                          ),
+                          const SizedBox(
+                            width: 6,
+                          ),
+                          Row(
+                            children: const [
+                              Text(
+                                'Android ',
+                                style: TextStyle(
+                                  decoration: TextDecoration.underline,
+                                  decorationStyle: TextDecorationStyle.solid,
+                                ),
+                              ),
+                              Text('Learning Path'),
+                            ],
+                          )
+                        ],
+                      ),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 12,
+                  ),
+                  Text(
+                    'Memulai Pemrograman Dengan Kotlin',
+                    style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                        color: myColor,
+                        fontSize: 24,
+                        letterSpacing: 1.4),
+                  ),
+                  const SizedBox(
+                    height: 14,
+                  ),
+                  Row(
+                    children: [
+                      const Text(
+                        "Teknologi:",
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w300,
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 12,
+                      ),
+                      Container(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 20, vertical: 6),
+                          decoration: BoxDecoration(
+                              border: Border.all(width: 3, color: myColor),
+                              borderRadius: BorderRadius.circular(4)),
+                          child: const Text('Android',
+                              style: TextStyle(
+                                fontWeight: FontWeight.w300,
+                              ))),
+                      const SizedBox(
+                        width: 10,
+                      ),
+                      Container(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 20, vertical: 6),
+                        decoration: BoxDecoration(
+                            border: Border.all(width: 3, color: myColor),
+                            borderRadius: BorderRadius.circular(4)),
+                        child: const Text('Multi Platform',
+                            style: TextStyle(
+                              fontWeight: FontWeight.w300,
+                            )),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 14,
+                  ),
+                  Row(
+                    children: [
+                      Row(
+                        children: const [
+                          const Icon(
+                            Icons.stacked_bar_chart_outlined,
+                            size: 32,
+                          ),
+                          const SizedBox(
+                            width: 12,
+                          ),
+                          const Text('Level: Dasar - Pemula',
+                              style: TextStyle(
+                                  fontSize: 16,
+                                  decoration: TextDecoration.underline,
+                                  decorationStyle: TextDecorationStyle.solid,
+                                  fontWeight: FontWeight.w300))
+                        ],
+                      ),
+                      const SizedBox(
+                        width: 12,
+                      ),
+                      Row(
+                        children: const [
+                          const Icon(
+                            Icons.timer_outlined,
+                            size: 32,
+                          ),
+                          const SizedBox(
+                            width: 12,
+                          ),
+                          const Text('50 jam belajar',
+                              style: TextStyle(
+                                  fontSize: 16, fontWeight: FontWeight.w300))
+                        ],
+                      )
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 14,
+                  ),
+                  Row(
+                    children: const [
+                      const Icon(
+                        Icons.people_outline,
+                        size: 32,
+                      ),
+                      const SizedBox(
+                        width: 12,
+                      ),
+                      const Text('41.304 Siswa terdaftar',
+                          style: TextStyle(
+                              fontSize: 16,
+                              color: Colors.black38,
+                              fontWeight: FontWeight.w300))
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 18,
+                  ),
+                  const Text(
+                    'Pelajari dasar bahasa pemrograman, functional programming, object-oriented programming (OOP), serta concurrency dengan menggunakan Kotlin.',
+                    style: TextStyle(
+                        height: 1.4, fontWeight: FontWeight.w400, fontSize: 16),
+                  ),
+                  const SizedBox(
+                    height: 35,
+                  ),
+                  Container(
+                      height: screenWidth / 12,
+                      child: Image.network(
+                        'https://dicoding-web-img.sgp1.cdn.digitaloceanspaces.com/original/academy/dos:memulai_pemrograman_dengan_kotlin_partner_110322081612.png',
+                        fit: BoxFit.cover,
+                      ))
+                ],
+              ),
+            ),
+          ],
+        )),
       ),
     );
   }
