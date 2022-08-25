@@ -168,75 +168,78 @@ class Desain2Widget extends State<Desain2> {
         backgroundColor: Colors.transparent,
         elevation: 0,
         title: Container(
-          padding: const EdgeInsets.only(left: 16),
+          padding: const EdgeInsets.only(top: 12),
           alignment: Alignment.centerLeft,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              const Text(
-                'Hello',
-                style: TextStyle(fontSize: 16, color: Colors.black45),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text(
+                    'Hello',
+                    style: TextStyle(fontSize: 16, color: Colors.black45),
+                  ),
+                  const SizedBox(
+                    height: 4,
+                  ),
+                  FutureBuilder(
+                    future: readData(),
+                    builder: (context, snapshot) {
+                      if (snapshot.hasError) {
+                        return Text('error ${snapshot.error}');
+                      } else if (snapshot.hasData) {
+                        final userName = snapshot.data;
+                        return Container(
+                          padding: const EdgeInsets.only(bottom: 12),
+                          child: Text(
+                            '$userName',
+                            style: const TextStyle(color: Colors.black87),
+                          ),
+                        );
+                      } else {
+                        return const Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      }
+                    },
+                  ),
+                ],
               ),
-              const SizedBox(
-                height: 4,
-              ),
-              FutureBuilder(
-                future: readData(),
-                builder: (context, snapshot) {
-                  if (snapshot.hasError) {
-                    return Text('error ${snapshot.error}');
-                  } else if (snapshot.hasData) {
-                    final userName = snapshot.data;
-                    return Container(
-                      padding: const EdgeInsets.only(bottom: 12),
-                      child: Text(
-                        '$userName',
-                        style: const TextStyle(color: Colors.black87),
+              Container(
+                padding: const EdgeInsets.only(right: 16),
+                child: Stack(
+                  children: [
+                    IconButton(
+                        onPressed: () {},
+                        icon: const Icon(
+                          Icons.notifications,
+                          color: Colors.black38,
+                          size: 32,
+                        )),
+                    Positioned(
+                      right: 11,
+                      top: 8,
+                      child: Container(
+                        alignment: Alignment.center,
+                        constraints:
+                            const BoxConstraints(minHeight: 14, minWidth: 14),
+                        decoration: BoxDecoration(
+                            color: Colors.red,
+                            borderRadius: BorderRadius.circular(6)),
+                        child: const Text(
+                          '1',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(color: Colors.white, fontSize: 8),
+                        ),
                       ),
-                    );
-                  } else {
-                    return const Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  }
-                },
+                    ),
+                  ],
+                ),
               ),
             ],
           ),
         ),
-        actions: <Widget>[
-          Container(
-            padding: const EdgeInsets.only(right: 16),
-            child: Stack(
-              children: [
-                IconButton(
-                    onPressed: () {},
-                    icon: const Icon(
-                      Icons.notifications,
-                      color: Colors.black38,
-                      size: 32,
-                    )),
-                Positioned(
-                  right: 11,
-                  top: 8,
-                  child: Container(
-                    alignment: Alignment.center,
-                    constraints:
-                        const BoxConstraints(minHeight: 14, minWidth: 14),
-                    decoration: BoxDecoration(
-                        color: Colors.red,
-                        borderRadius: BorderRadius.circular(6)),
-                    child: const Text(
-                      '1',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(color: Colors.white, fontSize: 8),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
       ),
       body: SafeArea(
           child: SingleChildScrollView(
@@ -316,7 +319,7 @@ class Desain2Widget extends State<Desain2> {
                 },
                 child: CarouselSlider(
                   options: CarouselOptions(
-                      height: screenWidth / 1.5,
+                      height: screenWidth - (screenWidth / 10),
                       autoPlay: false,
                       viewportFraction: 0.9,
                       aspectRatio: 22 / 9,
@@ -343,7 +346,7 @@ class Desain2Widget extends State<Desain2> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Row(
-                                      children: const <Widget>[
+                                      children: <Widget>[
                                         Icon(
                                           Icons.stacked_bar_chart_outlined,
                                           color: Colors.black54,
@@ -353,7 +356,7 @@ class Desain2Widget extends State<Desain2> {
                                           width: 4,
                                         ),
                                         Text(
-                                          'Langkah 1',
+                                          'Langkah ${i + 1}',
                                           style: TextStyle(
                                               fontSize: 12,
                                               fontWeight: FontWeight.w600,
@@ -484,7 +487,7 @@ class Desain2Widget extends State<Desain2> {
                                               width: 6,
                                             ),
                                             const Text(
-                                              '41.225 Siswa Terdaftar',
+                                              '41.225 Siswa',
                                               style: TextStyle(
                                                   fontSize: 14,
                                                   fontWeight: FontWeight.w400,
@@ -507,9 +510,9 @@ class Desain2Widget extends State<Desain2> {
                                 child: Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
-                                    children: const <Widget>[
-                                      const Text(
-                                        'Langkah Pertama',
+                                    children: <Widget>[
+                                      Text(
+                                        'Langkah ${i == 0 ? 'Pertama' : i == 1 ? 'Kedua' : i == 2 ? 'Ketiga' : 'Terakhir'}',
                                         style: const TextStyle(
                                             fontSize: 15,
                                             fontWeight: FontWeight.w600,
@@ -518,9 +521,9 @@ class Desain2Widget extends State<Desain2> {
                                       const SizedBox(
                                         height: 6,
                                       ),
-                                      const Text(
-                                        'Langkah pertama untuk menjadi seorang Android Developer dengan mempelajari bahasa yang direkomendasikan oleh Google.',
-                                        style: TextStyle(
+                                      Text(
+                                        'Langkah ${i == 0 ? 'pertama' : i == 1 ? 'kedua' : i == 2 ? 'ketiga' : 'terakhir'}  untuk menjadi seorang Android Developer dengan mempelajari bahasa yang direkomendasikan oleh Google.',
+                                        style: const TextStyle(
                                             fontSize: 13,
                                             fontWeight: FontWeight.w300,
                                             color: Colors.black87,
@@ -759,7 +762,7 @@ class DetailLearning extends StatelessWidget {
                           const SizedBox(
                             width: 12,
                           ),
-                          const Text('Level: Dasar - Pemula',
+                          const Text('Level: Dasar',
                               style: TextStyle(
                                   fontSize: 16,
                                   decoration: TextDecoration.underline,
@@ -779,7 +782,7 @@ class DetailLearning extends StatelessWidget {
                           const SizedBox(
                             width: 12,
                           ),
-                          const Text('50 jam belajar',
+                          const Text('50 jam',
                               style: TextStyle(
                                   fontSize: 16, fontWeight: FontWeight.w300))
                         ],
