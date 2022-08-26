@@ -50,24 +50,6 @@ final List<MySlider> sliderList = [
     imgUrl:
         'https://dicoding-web-img.sgp1.cdn.digitaloceanspaces.com/original/commons/dos:studi_independen_bersertifikat_kampus_merdeka_batch_ketiga_image_010722152429.png',
   ),
-  // const MySlider(
-  //   id: 1,
-  //   title: 'Beasiswa IDCamp 2022',
-  //   desc:
-  //       'IDCamp adalah program beasiswa dari Indosat Ooredoo Hutchison untuk mencetak developer Indonesia. Tersedia 8 opsi alur belajar. Daftarkan dirimu sekarang!',
-  //   creator: 'Indosat Ooredoo Hutchison',
-  //   imgUrl:
-  //       'https://dicoding-web-img.sgp1.cdn.digitaloceanspaces.com/original/commons/dos:beasiswa_idcamp_2022_image_300522084933.png',
-  // ),
-  // const MySlider(
-  //   id: 2,
-  //   title: 'Augmented Reality Creator program powered by Snap AR',
-  //   desc:
-  //       'Program beasiswa belajar membuat produk Augmented Reality di platform Snapchat untuk seluruh Warga Negara Indonesia.',
-  //   creator: 'Snapchat',
-  //   imgUrl:
-  //       'https://dicoding-web-img.sgp1.cdn.digitaloceanspaces.com/original/commons/dos:augmented_reality_creator_program_powered_by_snap_ar_image_010322091754.png',
-  // ),
   const MySlider(
     id: 3,
     title: 'Bangkit Academy 2022',
