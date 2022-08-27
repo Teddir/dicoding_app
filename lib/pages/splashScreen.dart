@@ -1,17 +1,11 @@
-// ignore_for_file: void_checks, avoid_print
-
-import 'dart:convert';
 import 'dart:developer';
-import 'dart:ui';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:deen/pages/home.dart';
+import 'package:deen/utils/class.dart';
 import 'package:deen/utils/validate.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-// ignore: unused_import
-import 'package:carousel_slider/carousel_slider.dart';
 
 class SplashScreenWidget extends StatefulWidget {
   const SplashScreenWidget({super.key});
@@ -50,10 +44,10 @@ class SplashScreenWidgetState extends State<SplashScreenWidget> {
               .signInWithEmailAndPassword(email: email, password: password);
           log('$credential');
         } on FirebaseAuthException catch (e) {
-          if (e.code == 'user-not-found') {
-            log('No user found for that email.');
+          if (e.code == 'Userqu-not-found') {
+            log('No Userqu found for that email.');
           } else if (e.code == 'wrong-password') {
-            log('Wrong password provided for that user.');
+            log('Wrong password provided for that Userqu.');
           }
         } catch (e) {
           print(e);
@@ -278,37 +272,9 @@ class SplashScreenWidgetState extends State<SplashScreenWidget> {
                 ))));
   }
 
-  Stream<List<User>> readUser() => FirebaseFirestore.instance
-      .collection('users')
-      .snapshots()
-      .map((event) => event.docs.map((e) => User.fromJson(e.data())).toList());
-}
-
-class User {
-  String id;
-  final String name;
-  final String email;
-  final String password;
-
-  User(
-      {this.id = '',
-      required this.name,
-      required this.email,
-      this.password = ''});
-
-  Map<String, dynamic> toJson() => {
-        'id': id,
-        'name': name,
-        'email': email,
-        'password': password,
-      };
-
-  static User fromJson(Map<String, dynamic> json) => User(
-        id: json['id'],
-        name: json['name'],
-        email: json['email'],
-        password: json['password'],
-      );
+  Stream<List<Userqu>> readUserqu() =>
+      FirebaseFirestore.instance.collection('Userqus').snapshots().map(
+          (event) => event.docs.map((e) => Userqu.fromJson(e.data())).toList());
 }
 
 class SplashScreenWidgetSign extends StatefulWidget {
@@ -332,7 +298,7 @@ class SplashScreenWidgetSignState extends State<SplashScreenWidgetSign> {
   }
 
   void _regiterToFb() async {
-    final docs = FirebaseFirestore.instance.collection('users').doc();
+    final docs = FirebaseFirestore.instance.collection('Userqus').doc();
 
     final name = nameController.text;
     final email = emailController.text;
@@ -359,13 +325,12 @@ class SplashScreenWidgetSignState extends State<SplashScreenWidgetSign> {
           );
 
           final myUid = FirebaseAuth.instance.currentUser!.uid;
-          final users = User(id: myUid, name: name, email: email);
-          final jsonUser = users.toJson();
-          await docs.set(jsonUser);
-          // ignore: use_build_context_synchronously
+          final Userqus = Userqu(id: myUid, name: name, email: email);
+          final jsonUserqu = Userqus.toJson();
+          await docs.set(jsonUserqu);
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => MyHomeWidget(uid: docs.id)),
+            MaterialPageRoute(builder: (context) => MyHomeWidgetState()),
           );
         } on FirebaseAuthException catch (e) {
           if (e.code == 'weak-password') {

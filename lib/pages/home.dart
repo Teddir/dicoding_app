@@ -1,111 +1,16 @@
-// ignore_for_file: unnecessary_this, unnecessary_const
-
-import 'dart:developer';
-import 'dart:ui';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:deen/main.dart';
-import 'package:deen/pages/splashScreen.dart';
-import 'package:deen/utils/validate.dart';
+import 'package:deen/utils/list.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-// ignore: unused_import
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/services.dart';
 
-class MyHomeWidget extends StatefulWidget {
-  const MyHomeWidget({Key? key, required uid, datas}) : super(key: key);
-  @override
-  State<MyHomeWidget> createState() => MyHomeWidgetState();
-}
-
-class MySlider {
-  final int id;
-  final String imgUrl;
-  final String title;
-  final String desc;
-  final String creator;
-
-  const MySlider(
-      {required this.id,
-      required this.imgUrl,
-      required this.title,
-      required this.desc,
-      required this.creator});
-
-  @override
-  String toString() {
-    return '{${this.id}, ${this.title}, ${this.desc}, ${this.creator}, ${this.imgUrl}}';
-  }
-}
-
-final List<MySlider> sliderList = [
-  const MySlider(
-    id: 0,
-    title: 'Studi Independen Bersertifikat Kampus Merdeka Batch Ketiga',
-    desc:
-        'Program Studi Independen memungkinkan mahasiswa/i dari jurusan apapun mempelajari Teknologi & Persiapan Karier sebagai Developer dengan konversi hingga 20 SKS.',
-    creator: 'Dicoding & Kemendikbudristek - Dikti',
-    imgUrl:
-        'https://dicoding-web-img.sgp1.cdn.digitaloceanspaces.com/original/commons/dos:studi_independen_bersertifikat_kampus_merdeka_batch_ketiga_image_010722152429.png',
-  ),
-  const MySlider(
-    id: 3,
-    title: 'Bangkit Academy 2022',
-    desc:
-        'Program kesiapan karier terafiliasi Kampus Merdeka. Melatih mahasiswa agar memiliki keterampilan relevan untuk karier sukses di perusahaan teknologi terkemuka.',
-    creator: 'Google, GoTo, Traveloka, Kemdikbudristek',
-    imgUrl:
-        'https://dicoding-web-img.sgp1.cdn.digitaloceanspaces.com/original/commons/dos:bangkit_academy_2022_image_301121094414.png',
-  ),
-];
-
-final List<MySlider> sliderListKategori = [
-  const MySlider(
-      id: 0,
-      imgUrl:
-          'https://images.unsplash.com/photo-1510915228340-29c85a43dcfe?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80',
-      title: 'Android Developer',
-      desc: '',
-      creator: ''),
-  const MySlider(
-      id: 1,
-      imgUrl:
-          'https://images.unsplash.com/photo-1534665482403-a909d0d97c67?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80',
-      title: 'Back-End Developer',
-      desc: '',
-      creator: ''),
-  const MySlider(
-      id: 2,
-      imgUrl:
-          'https://images.unsplash.com/photo-1555066931-bf19f8fd1085?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=871&q=80',
-      title: 'Front-End Web Developer',
-      desc: '',
-      creator: ''),
-  const MySlider(
-      id: 3,
-      imgUrl:
-          'https://images.unsplash.com/photo-1623479322729-28b25c16b011?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80',
-      title: 'Ios Developer',
-      desc: '',
-      creator: ''),
-];
-
-class MyHomeWidgetState extends State<MyHomeWidget> {
-  final String _name = '';
+class MyHomeWidgetState extends StatelessWidget {
+  const MyHomeWidgetState({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Desain2();
-  }
-
-  void initState() {
-    // put it here
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-      statusBarColor: Colors.transparent,
-    ));
-    super.initState();
+    return const Desain2();
   }
 }
 
@@ -117,6 +22,18 @@ class Desain2 extends StatefulWidget {
 }
 
 class Desain2Widget extends State<Desain2> {
+  var listWarna = [
+    Colors.black,
+    Colors.purple,
+    Colors.teal,
+  ];
+  int index = 0;
+  void incrementIndex() {
+    setState(() {
+      index++;
+    });
+  }
+
   int _selectedIndex = 0;
 
   void __onItemTapped(int index) {
@@ -143,8 +60,6 @@ class Desain2Widget extends State<Desain2> {
       return userName;
     }
 
-    // ignore: prefer_function_declarations_over_variables
-
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -158,9 +73,9 @@ class Desain2Widget extends State<Desain2> {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
+                  Text(
                     'Hello',
-                    style: TextStyle(fontSize: 16, color: Colors.black45),
+                    style: TextStyle(fontSize: 16, color: listWarna[index]),
                   ),
                   const SizedBox(
                     height: 4,
@@ -417,7 +332,7 @@ class Desain2Widget extends State<Desain2> {
                                               width: 6,
                                             ),
                                             const Text(
-                                              'Dasar - Pemula',
+                                              'Dasar',
                                               style: TextStyle(
                                                   fontSize: 12,
                                                   fontWeight: FontWeight.w500,
@@ -601,6 +516,14 @@ class Desain2Widget extends State<Desain2> {
         unselectedItemColor: const Color.fromARGB(85, 62, 80, 100),
       ),
     );
+  }
+
+  void initState() {
+    // put it here
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+      statusBarColor: Colors.transparent,
+    ));
+    super.initState();
   }
 }
 
@@ -812,97 +735,6 @@ class DetailLearning extends StatelessWidget {
             ),
           ],
         )),
-      ),
-    );
-  }
-}
-
-class Desain1 extends StatelessWidget {
-  const Desain1({Key? key}) : super(key: key);
-  @override
-  Widget build(BuildContext context) {
-    Size screenSize = MediaQuery.of(context).size;
-    Orientation orientation = MediaQuery.of(context).orientation;
-    double screenWidth = MediaQuery.of(context).size.width;
-    return Container(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          CarouselSlider(
-            options: CarouselOptions(
-                autoPlay: true,
-                viewportFraction: 1,
-                aspectRatio: 16 / 9,
-                initialPage: 0,
-                autoPlayInterval: const Duration(seconds: 10)),
-            items: sliderList.map((i) {
-              return Builder(
-                builder: (BuildContext context) {
-                  return Container(
-                      height: 400,
-                      width: screenWidth,
-                      child: Center(
-                        child: Stack(
-                          alignment: Alignment.center,
-                          children: [
-                            Positioned(
-                                child: Container(
-                              width: screenWidth,
-                              color: Color.fromARGB(255, 212, 212, 212),
-                              child: Image.network(
-                                i.imgUrl,
-                                fit: BoxFit.cover,
-                              ),
-                            )),
-                            Container(
-                              width: screenWidth,
-                              height: 400,
-                              alignment: Alignment.center,
-                              // decoration: const BoxDecoration(
-                              //     gradient: LinearGradient(
-                              //   begin: Alignment.topCenter,
-                              //   end: Alignment.bottomCenter,
-                              //   colors: [
-                              //     Color.fromARGB(59, 62, 80, 100),
-                              //     Color.fromARGB(78, 43, 55, 70),
-                              //   ],
-                              //   stops: [0.4, 0.76],
-                              // )),
-                              padding: const EdgeInsets.symmetric(
-                                  vertical: 12, horizontal: 16),
-                            ),
-                          ],
-                        ),
-                      ));
-                },
-              );
-            }).toList(),
-          ),
-          Container(
-              margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text(
-                    'Learning',
-                    style: TextStyle(fontSize: 22, fontWeight: FontWeight.w700),
-                  ),
-                  Container(
-                    alignment: Alignment.center,
-                    color: Colors.pink,
-                    child: GridView.count(
-                      shrinkWrap: true,
-                      primary: false,
-                      scrollDirection: Axis.vertical,
-                      crossAxisCount: 8,
-                      children: List.generate(16, (index) {
-                        return Text('sa');
-                      }),
-                    ),
-                  )
-                ],
-              ))
-        ],
       ),
     );
   }
